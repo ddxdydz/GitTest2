@@ -17,5 +17,5 @@ https://yandex.ru/dev/maps/staticapi/doc/1.x/dg/concepts/input_params.html
 https://yandex.ru/dev/maps/geocoder/doc/desc/concepts/about.html
 # API поиска по организациям
 https://yandex.ru/dev/maps/geosearch/doc/concepts/about.html?from=geosearch
-
+# google
 https://drive.google.com/drive/folders/1WrYE5FHRxVhxheWi4PC718fKzbIwZ-uu?usp=sharing
