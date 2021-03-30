@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>Привет, {{ username }}!</h1>
+    </body>
+</html>
+
+<!--УСЛОВИЕ:
+@app.route('/odd_even')  # обработчик
+def odd_even():
+    return render_template('odd_even.html', number=2)-->
+<body>
+{% if number % 2 == 0 %}
+    <div>{{ number }} - чётное</div>
+{% elif number % 2 != 0 %}   <!--(не обязательно)-->
+    <div>{{ number }} - нечётное</div>
+{% else %}                   <!--(не обязательно)-->
+    <div>{{ number }} - неопознано</div>
+{% endif %}
+</body>
+
+<!--ЦИКЛ FOR:
+@app.route('/news')  # обработчик
+def news():
+    with open("news.json", "rt", encoding="utf8") as f:
+        news_list = json.loads(f.read())
+    print(news_list)
+    return render_template('news.html', news=news_list)
+Внутри цикла доступна переменная loop с рядом полезных атрибутов, например:
+index — индекс итерации с 1
+index0 — индекс итерации с нуля
+first — True, если первая итерация, иначе False
+last — True, если последняя итерация, иначе False-->
+<body>
+    {% for item in news['news'] %}       <!-- {% for переменная цикла in набор значений %} - range -->
+        <h2>{{item["title"]}}</h2>       <!-- код -->
+        <div>{{item["content"]}}</div>   <!-- код -->
+    {% endfor %}                         <!-- {% endfor %} -->
+</body>
+
+
+<!-- ПЕРЕМЕННЫЕ: {% set a = 10 %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>Кто стоит в очереди?</h1>
+    {% set man = man_list|random %}
+    {% set user_list = ['Ваня', 'Петя', 'Саша', 'Кирилл'] %}
+    <ul>
+        {% for user in user_list %}
+            <li>
+                {{ loop.index }} - {{ user }}
+                {% if loop.first %}
+                    первый в очереди
+                {% elif loop.last %}
+                    последний.
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+<!-- Давайте создадим базовый шаблон, который будет содержать небольшое верхнее меню, в файле base.html:
+оператор управления блоком: {% block %}{% endblock %}, чтобы определить место, куда будет вставляться содержимое дочерних шаблонов. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <title>{{title}}</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">Наше приложение</a>
+        </nav>
+    </header>
+    <!-- Begin page content -->
+    <main role="main" class="container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+<!-- ДОЧЕРНИЙ INDEX.HTML -->
+<!-- В extends мы указываем, какой шаблон мы хотим расширить, а в block — какой именно блок (их может быть несколько). -->
+{% extends "base.html" %}
+{% block content %}
+    <h1>Привет, {{ username }}!</h1>
+{% endblock %}
